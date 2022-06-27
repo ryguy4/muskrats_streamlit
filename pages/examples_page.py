@@ -24,7 +24,6 @@ st.write(df)
 st.write("## Top highest budgeted movies:")
 x = st.slider('Number of movies to display:', value=5, min_value=1, max_value=50)
 # Use a cache so we can load display our sorted data quickly
-@st.cache
 def get_data_sorted_by_budget():
     return df.sort_values("budget",ascending=False) 
 df_sorted_by_budget = get_data_sorted_by_budget()
@@ -32,17 +31,17 @@ st.write(df_sorted_by_budget.head(x))
 
 # Show a scatter plot of movie budget vs year
 st.write("## Movie budget vs. year:")
-@st.cache
 def draw_movie_budget():
     return (
-        ggplot(df.sample(1000, random_state=42).query('budget > 100'), aes(x='year',y='budget'))
+        ggplot(df.query('budget > 100').sample(100, random_state=42), aes(x='year',y='budget'))
         + geom_point()
         + theme_bw()
-    ).draw(show=False)
+    )
+
 # We can do different options depending on the button clicked (left or right)
 left_column, right_column, col3 = st.columns([.3,.3,1])
 if left_column.button("Show graph"):
-    st.pyplot(draw_movie_budget())
+    st.pyplot(draw_movie_budget().draw(show=False))
 if right_column.button("Hide graph"):
     pass
 
