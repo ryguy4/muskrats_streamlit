@@ -14,7 +14,7 @@ def get_data():
 df = get_data()
 
 # Write the title header.
-st.write("""# Muskrats Streamlit App""")
+st.write("""# Streamlit App""")
 
 # Show a table of the entire dataset.
 st.write("## Our dataset:")
